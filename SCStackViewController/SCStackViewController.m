@@ -133,6 +133,12 @@
     }
     
     NSMutableArray *viewControllers = self.viewControllers[@(position)];
+    UIViewController *lastViewController = [viewControllers lastObject];
+    if (lastViewController == nil) {
+        lastViewController = self.rootViewController;
+    }
+
+    
     [viewControllers addObject:viewController];
     
     [self updateFinalFramesForPosition:position];
@@ -148,7 +154,7 @@
     
     [viewController willMoveToParentViewController:self];
     if(shouldStackAboveRoot) {
-        [self.scrollView insertSubview:viewController.view aboveSubview:self.rootViewController.view];
+        [self.scrollView insertSubview:viewController.view aboveSubview:lastViewController.view];
     } else {
         [self.scrollView insertSubview:viewController.view atIndex:0];
     }
